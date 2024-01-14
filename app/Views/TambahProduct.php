@@ -15,17 +15,17 @@
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
-	        <ul class="list-unstyled components mb-5">
+	           <ul class="list-unstyled components mb-5">
 
 	          <li>
-	              <a href="#">Product</a>
+	              <a href='<?= site_url('home') ?>'>Product</a>
 	          </li>
 
 	          <li>
-              <a href="#">Profil</a>
+              <a href='<?= site_url('profil') ?>'>Profil</a>
 	          </li>
 	          <li>
-              <a href="#">Logout</a>
+              <a href='<?= site_url('/') ?>'>Logout</a>
 	          </li>
 	        </ul>
 
