@@ -66,12 +66,13 @@
               <table class="table table-striped table-bordered datatable" width="100%" cellspacing="0" id="tabel-data">
                 <thead>
                   <tr>
-                    <th>Image</th>
+
                     <th>Nama Produk</th>
                     <th>Kategori Produk</th>
                     <th>Harga Jual</th>
                     <th>Harga Beli</th>
                     <th>Stock</th>
+                    <th>Aksi</th>
 
                   </tr>
                 </thead>
@@ -118,7 +119,9 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    
   </body>
 </html>
 <script>
@@ -144,10 +147,10 @@
                 while (i < dataproduct.length) {
   
                   datarow +='<tr><td style="width:10%">' + dataproduct[i].nama_product + '</td>' +
-                  '<td style="width:10%">' + dataproduct[i].nama_product + '</td>' +
                   '<td style="width:10%">' + dataproduct[i].kategori_product + '</td>' +
-                  '<td style="width:10%">' + dataproduct[i].harga_jual + '</td>' +
-                   '<td style="width:10%">' + dataproduct[i].harga_beli + '</td>' +
+                  '<td style="width:10%">' + formatMoney(dataproduct[i].harga_jual) + '</td>' +
+                  '<td style="width:10%">' + formatMoney(dataproduct[i].harga_beli) + '</td>' +
+                   '<td style="width:10%">' + dataproduct[i].stock + '</td>' +
                   '<td style="width:10% !important;"><div class="btn-group">' +
                   '<a type="button" href=" <?= base_url(); ?>TambahProduct/' + dataproduct[i].nama_product +'" class="btn btn-primary">Update</a>' +
                   '<button type="button" onClick="DeleteProduct(\'' + dataproduct[i].nama_product + '\')" class="btn btn-dark me-1">Delete</button></td></tr>' 
@@ -169,4 +172,61 @@
         });
 
     }
+      function formatMoney(angka) {
+             var rupiah = '';
+             var angkarev = angka.toString().split('').reverse().join('');
+             for (var i = 0; i < angkarev.length; i++)
+                 if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+             return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+         }
+     function DeleteProduct(namabarang) {
+      console.log(namabarang)
+             Swal.fire({
+                 title: 'Hapus!!',
+                 text: "Apakah Anda Yakin Ingin Menghapus Product?",
+                 icon: 'warning',
+                 showCancelButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Yes!'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     var formData = new FormData();
+                     formData.append('namabarang', namabarang);
+                    
+                     console.log(formData)
+                     $.ajax({
+                      url: '<?php echo base_url();?>deleteProduck',
+                        method: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                         success: function(data) {
+                             var t=JSON.parse(data);
+                            console.log(t)
+                             if (t.status == 1) {
+                                 Swal.fire(
+                                     'Berhasil   !',
+                                     data.pesan
+                                 ).then(function() {
+                                     location.reload();
+                                 });
+                             } else {
+                                 Swal.fire({
+                                     icon: 'error',
+                                     title: 'Gagal',
+                                     text: data.pesan
+                                 }).then(function() {
+                                     location.reload();
+                                 });
+                             }
+
+                         }
+                     });
+                  } else {
+                     return false
+                 }
+             })
+             
+         }
 </script>

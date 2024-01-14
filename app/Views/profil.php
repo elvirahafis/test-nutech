@@ -48,66 +48,59 @@
           </div>
         </nav>      
  
-  <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>Data Produk</h1>
-    </div><!-- End Page Title -->
+    <main id="main" class="main">
+
+  
 
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
 
           <div class="card">
-            
             <div class="card-body">
-             <a type="button" href='<?= site_url('TambahProduct') ?>'  class="btn btn-danger">Tambah Product</a>    
-             <br></br>
-              <!-- Table with stripped rows -->
-              <table class="table table-striped table-bordered" width="100%" cellspacing="0" id="tabel-data">
-                <thead>
-                  <tr>
-                    <th><b>Kode Buku</b></th>
-                    <th>Kode Kategori</th>
-                    <th>Judul</th>
-                    <th>Pengarang</th>
-                    <th>Penerbit</th>
-                    <th>Tahun Terbit</th>
-                    <th>Jumlah</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-			
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
+
+
+              <!-- General Form Elements -->
+             <!-- <form method="post" action="edit.php"> -->
+                  <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label">Nama </label>
+                                <input type="text" name="nama" id="nama" value='<?= session()->get('nama'); ?>' Readonly class="form-control" >
+                            </div>
+                </div>
+                 </div>
+                <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label">Posisi </label>
+                                <input type="text" name="posisi" id="posisi" value='<?= session()->get('posisi'); ?>' Readonly class="form-control" >
+                            </div>
+                        </div>
+
+                      
+                 </div>
+                
+                <!-- <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Upload Image</label>
+                  <div class="col-sm-10">
+                  <input class="form-control" type="file" name="cover" id="formFile">
+                  </div>
+                </div> -->
+                 
+
+              <!-- </form>End General Form Elements -->
 
             </div>
           </div>
 
         </div>
+
+        </div>
       </div>
     </section>
 
-         <div class="modal fade" id="orderModal" style="z-index: 9999;" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="width:400px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-
-                </div>
-            </div>
-        </div>
-    </div>
-      </main>
+  </main><!-- End #main -->
 
       </div>
 		</div>
@@ -119,11 +112,14 @@
     <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    
   </body>
 </html>
-<script>
+<script type="text/javascript">
     $(document).ready(function(){
         $('#tabel-data').DataTable();
     });
+
 </script>

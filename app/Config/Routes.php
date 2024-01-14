@@ -22,9 +22,12 @@ $routes->get('home', 'Home::home');
 $routes->post('login', 'Home::login');
 $routes->get('TambahProduct', 'Home::tambahproduct');
 $routes->get('TambahProduct/:any', 'Home::editproduct');
-$routes->get('tambahdataproduct', 'Home::tambahdataproduct');
+$routes->post('editproduk', 'Home::editdataprod');
+$routes->post('tambahprodukD','Home::editproddata');
 $routes->get('getListProductbyid', 'Home::editbyproduct');
 $routes->get('getListProduct', 'Home::getListProduct');
+$routes->post('deleteProduck','Home::deleteProduck');
+$routes->get('getKategori','Home::getKategori');
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }

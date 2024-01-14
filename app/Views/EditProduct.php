@@ -74,7 +74,9 @@
                         <div class="col">
                             <div class="mb-3">
                                 <label class="form-label">Kategori</label>
-                                <input type="text" name="kategori" id="kategori"  class="form-control" placeholder='Pilih Kategori'>
+                                 <select  id="kategori" name="kategori" class="form-control selectpicker" style="width:100%">
+                                        <option value="">Silahkan Pilih</option>
+                                    </select>
                             </div>
                         </div>
 
@@ -118,7 +120,7 @@
                  
                   <div class="col-sm-10">
                     <button type="submit" name ='btnsimpanbuku' onClick='simpandata()' class="btn btn-danger">Simpan</button>
-                    <button class="btn btn-secondary" name="bkosongkan" type="reset">Batalkan</button>
+                    <!-- <button class="btn btn-secondary" name="bkosongkan" type="reset">Batalkan</button> -->
                   </div>
                 </div>
 
@@ -146,14 +148,20 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     
   </body>
 </html>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#tabel-data').DataTable();
+         $("#kategori").select2({
+            placeholder: "Pilih Dahulu",
+            allowClear: true
+        });
     });
     getdataProduct();
+    getKategori();
     function simpandata()
     {
         
@@ -163,14 +171,31 @@
         var hargajual = $('#hargajual').val();
         var stock = $('#stock').val();
         console.log('ll',kategori,namabarang,hargabeli,hargajual,stock);
+         if(kategori ==""){
+          Swal.fire('Silahkan Masukan kategori !');
+          return false;
+        } else if(namabarang==""){
+                Swal.fire('Silahkan Masukan Nama Barang !');
+                return false;
+        } else if(hargabeli==""){
+                Swal.fire('Silahkan Masukan Harga Beli !');
+                return false;
+        } else if(hargajual==""){
+                Swal.fire('Silahkan Masukan Harga Jual !');
+                return false;
+        } else if(stock==""){
+                Swal.fire('Silahkan Masukan Stock !');
+                return false;
+        } else {
         var formData = new FormData();
         formData.append('kategori', kategori);
         formData.append('namabarang', namabarang);
         formData.append('hargabeli', hargabeli);
         formData.append('hargajual', hargajual);
         formData.append('stock', stock);
+        console.log(formData);
         $.ajax({
-                url: '<?php echo base_url();?>tambahdataproduct',
+                url: '<?php echo base_url();?>editproduk',
                 method: 'POST',
                 data: formData,
                 processData: false,
@@ -198,6 +223,7 @@
                 }
 
             });
+        }
     }
     function getdataProduct(){
      var nama_product=$( "#nama_product" ).val();
@@ -222,6 +248,25 @@
                      $('#stock').val(data.stock);
                 // })
             }
+         
+
+        });
+    }
+    function getKategori() {
+            var optMenu = '<option value="">==option==</option>';
+
+            $.ajax({
+                url: '<?php echo base_url();?>getKategori',
+                method: 'GET',
+                success: function(data) {
+                    var t =JSON.parse(data);
+                    var datakategori=t.data;
+                console.log(datakategori,'34')
+                $.each(datakategori, function(index, value) {
+                    optMenu += '<option value="' + value.id_kategori + '" >' +value.id_kategori+ '-'+ value.nama_kategori + '</option>';
+                });
+                $('#kategori').html(optMenu);
+                }
          
 
         });
